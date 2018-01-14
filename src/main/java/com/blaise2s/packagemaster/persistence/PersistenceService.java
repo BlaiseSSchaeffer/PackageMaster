@@ -82,6 +82,22 @@ public class PersistenceService {
 		return success;
 	}
 
+	public static boolean update(Object o) {
+		boolean success = false;
+		try {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			em.merge(o);
+			em.getTransaction().commit();
+			em.close();
+			success = true;
+		} catch (Exception e) {
+			System.out.println("Failed to update data.");
+			e.printStackTrace();
+		}
+		return success;
+	}
+
 	public static boolean delete(String namedQueryName, Object... params) {
 		boolean success = false;
 		try {

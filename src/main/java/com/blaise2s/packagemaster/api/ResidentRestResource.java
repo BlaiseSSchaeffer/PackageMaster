@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,21 +34,28 @@ public class ResidentRestResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPerson(Resident r) {
+	public Response createResident(Resident r) {
 		return Format.responseNoCache(PersistenceService.persist(r));
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response putResident(Resident r) {
+		return Format.responseNoCache(PersistenceService.update(r));
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deletePerson(@PathParam("id") String id) {
+	public Response deleteResident(@PathParam("id") String id) {
 		return Format.responseNoCache(PersistenceService.remove(Resident.class, Integer.parseInt(id)));
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deletePerson(Resident r) {
+	public Response deleteResident(Resident r) {
 		return Format.responseNoCache(PersistenceService.remove(r));
 	}
 
