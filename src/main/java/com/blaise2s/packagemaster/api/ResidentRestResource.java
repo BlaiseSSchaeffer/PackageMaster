@@ -49,14 +49,14 @@ public class ResidentRestResource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResident(@PathParam("id") String id) {
-		return Format.responseNoCache(PersistenceService.remove(Resident.class, Integer.parseInt(id)));
+		return Format.responseNoCache(PersistenceService.delete(Resident.class, Integer.parseInt(id)));
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResident(Resident r) {
-		return Format.responseNoCache(PersistenceService.remove(r));
+		return Format.responseNoCache(PersistenceService.delete(r));
 	}
 
 }
