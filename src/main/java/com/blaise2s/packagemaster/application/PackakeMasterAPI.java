@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import com.blaise2s.packagemaster.api.DeliveryRestResource;
-import com.blaise2s.packagemaster.api.MetadataRestResource;
+import com.blaise2s.packagemaster.api.ConfigurationRestResource;
 import com.blaise2s.packagemaster.api.ResidentRestResource;
 import com.blaise2s.packagemaster.api.UnitRestResource;
 
@@ -20,7 +20,7 @@ public class PackakeMasterAPI extends Application {
 		classes.add(ResidentRestResource.class);
 		classes.add(UnitRestResource.class);
 		classes.add(DeliveryRestResource.class);
-		classes.add(MetadataRestResource.class);
+		classes.add(ConfigurationRestResource.class);
 		return classes;
 	}
 

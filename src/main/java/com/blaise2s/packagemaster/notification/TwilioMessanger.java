@@ -12,13 +12,20 @@ public class TwilioMessanger {
 		// Intentionally left empty.
 	}
 
-	public static Status sendText(String phone, int numPackages) {
-		Twilio.init(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN);
+	public static String sendText(String phone, int numPackages) {
+		Status status = Status.FAILED;
+		try {
+			Twilio.init(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN);
 
-		Message m = Message.creator(new PhoneNumber(Config.TWILIO_COUNTRY_CODE + phone),
-				new PhoneNumber(Config.TWILIO_COUNTRY_CODE + Config.TWILIO_FROM_NUMBER),
-				String.format(Config.SENDGRID_EMAIL_CONTENT, numPackages)).create();
+			Message m = Message.creator(new PhoneNumber(Config.TWILIO_COUNTRY_CODE + phone),
+					new PhoneNumber(Config.TWILIO_COUNTRY_CODE + Config.TWILIO_FROM_NUMBER),
+					String.format(Config.SENDGRID_EMAIL_CONTENT, numPackages)).create();
+			status = m.getStatus();
 
-		return m.getStatus();
+		} catch (Exception e) {
+			System.out.println("Failed to send text message.");
+			e.printStackTrace();
+		}
+		return status.toString();
 	}
 }

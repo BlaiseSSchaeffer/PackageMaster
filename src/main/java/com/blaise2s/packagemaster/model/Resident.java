@@ -1,24 +1,33 @@
 package com.blaise2s.packagemaster.model;
 
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity(name = "Resident")
 @Table(name = "Resident")
 @Access(value = AccessType.PROPERTY)
 @NamedQueries({ @NamedQuery(name = "Resident.findAll", query = "SELECT r FROM Resident r"),
-		@NamedQuery(name = "Resident.findByUnit", query = "SELECT r FROM Resident r WHERE r.unit = ?1"),
-		@NamedQuery(name = "Unit.findAll", query = "SELECT DISTINCT r.unit FROM Resident r") })
+		@NamedQuery(name = "Resident.findByUnit", query = "SELECT r FROM Resident r WHERE r.unit.id = ?1"), })
 @JsonPropertyOrder({ "id", "firstName", "lastName", "email", "phone", "unit" })
 public class Resident {
 	private Integer id;
@@ -26,7 +35,8 @@ public class Resident {
 	private String lastName;
 	private String email;
 	private String phone;
-	private String unit;
+	private Unit unit;
+	private List<Delivery> deliveries;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,13 +84,26 @@ public class Resident {
 		this.phone = phone;
 	}
 
-	@Column(nullable = false, length = 6)
-	public String getUnit() {
+	@ManyToOne(optional = false)
+	@JoinColumn(nullable = false, name = "UNIT_ID")
+	public Unit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Delivery.class)
+	@CascadeOnDelete
+	@JoinColumn(name = "RESIDENT_ID")
+	@JsonInclude(Include.NON_EMPTY)
+	public List<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(List<Delivery> deliveries) {
+		this.deliveries = deliveries;
 	}
 
 }

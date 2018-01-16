@@ -14,8 +14,8 @@ import com.blaise2s.packagemaster.model.Configuration;
 import com.blaise2s.packagemaster.persistence.PersistenceService;
 import com.blaise2s.packagemaster.utilities.Format;
 
-@Path("/metadata")
-public class MetadataRestResource {
+@Path("/config")
+public class ConfigurationRestResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -34,15 +34,14 @@ public class MetadataRestResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putMetadata(Configuration config) {
-		return Format.responseNoCache(
-				PersistenceService.update("Configuration.update", config.getValue(), config.getName()));
+		return Format.responseNoCache(PersistenceService.update(config));
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteMetadata(Configuration config) {
-		return Format.responseNoCache(PersistenceService.update("Configuration.delete", config.getName()));
+		return Format.responseNoCache(PersistenceService.delete(config));
 	}
 
 }
