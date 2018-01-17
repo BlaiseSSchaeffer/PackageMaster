@@ -19,28 +19,28 @@ public class ConfigurationRestResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMetatdata() {
+	public Response getConfigurations() {
 		return Format.responseNoCache(PersistenceService.search("Configuration.findAll", Configuration.class));
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response postMetadata(Configuration config) {
+	public Response createConfiguration(Configuration config) {
 		return Format.responseNoCache(PersistenceService.persist(config));
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response putMetadata(Configuration config) {
+	public Response updateConfiguration(Configuration config) {
 		return Format.responseNoCache(PersistenceService.update(config));
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteMetadata(Configuration config) {
+	public Response deleteConfiguration(Configuration config) {
 		return Format.responseNoCache(PersistenceService.delete(config));
 	}
 

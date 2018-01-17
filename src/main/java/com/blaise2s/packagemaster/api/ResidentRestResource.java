@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.blaise2s.packagemaster.model.Resident;
+import com.blaise2s.packagemaster.model.Unit;
 import com.blaise2s.packagemaster.persistence.PersistenceService;
 import com.blaise2s.packagemaster.utilities.Format;
 
@@ -35,13 +36,15 @@ public class ResidentRestResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createResident(Resident r) {
+		Unit unit = PersistenceService.search(Unit.class, r.getUnit().getId());
+		r.setUnit(unit);
 		return Format.responseNoCache(PersistenceService.persist(r));
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response putResident(Resident r) {
+	public Response updateResident(Resident r) {
 		return Format.responseNoCache(PersistenceService.update(r));
 	}
 
